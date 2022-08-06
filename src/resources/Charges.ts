@@ -1,11 +1,11 @@
-import type { Client } from "../Client";
-import * as Types from "../types";
-import { CHARGES_RESOURCE } from "../constants";
+import type { Client } from '../Client'
+import * as Types from '../types'
+import { CHARGES_RESOURCE } from '../constants'
 
 export class Charges {
-  protected client: Client;
+  protected client: Client
   constructor(client: Client) {
-    this.client = client;
+    this.client = client
   }
 
   /**
@@ -15,9 +15,9 @@ export class Charges {
    */
   retrieve(chargeId: string): Promise<Types.Charges.ICharge> {
     return this.client.request<Types.Charges.ICharge>({
-      method: "get",
+      method: 'get',
       path: `${CHARGES_RESOURCE}/${chargeId}`,
-    });
+    })
   }
 
   /**
@@ -27,10 +27,10 @@ export class Charges {
    */
   create(chargeData: Types.Charges.IRequest): Promise<Types.Charges.ICharge> {
     return this.client.request<Types.Charges.ICharge, Types.Charges.IRequest>({
-      method: "post",
+      method: 'post',
       path: CHARGES_RESOURCE,
       data: chargeData,
-    });
+    })
   }
 
   /**
@@ -44,10 +44,10 @@ export class Charges {
     chargeData: Types.Charges.IRequest
   ): Promise<Types.Charges.ICharge> {
     return this.client.request<Types.Charges.ICharge, Types.Charges.IRequest>({
-      method: "patch",
+      method: 'patch',
       path: `${CHARGES_RESOURCE}/${chargeId}`,
       data: chargeData,
-    });
+    })
   }
 
   /**
@@ -57,9 +57,9 @@ export class Charges {
    */
   reverse(chargeId: string): Promise<Types.Charges.ICharge> {
     return this.client.request<Types.Charges.ICharge>({
-      method: "post",
+      method: 'post',
       path: `${CHARGES_RESOURCE}/${chargeId}/reverse`,
-    });
+    })
   }
 
   /**
@@ -69,9 +69,9 @@ export class Charges {
    */
   capture(chargeId: string): Promise<Types.Charges.ICharge> {
     return this.client.request<Types.Charges.ICharge>({
-      method: "post",
+      method: 'post',
       path: `${CHARGES_RESOURCE}/${chargeId}/capture`,
-    });
+    })
   }
 
   /**
@@ -80,8 +80,8 @@ export class Charges {
    */
   list(): Promise<Types.Charges.IChargeList> {
     return this.client.request<Types.Charges.IChargeList>({
-      method: "get",
+      method: 'get',
       path: CHARGES_RESOURCE,
-    });
+    })
   }
 }

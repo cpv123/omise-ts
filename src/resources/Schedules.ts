@@ -1,11 +1,11 @@
-import type { Client } from "../Client";
-import * as Types from "../types";
-import { SCHEDULES_RESOURCE } from "../constants";
+import type { Client } from '../Client'
+import * as Types from '../types'
+import { SCHEDULES_RESOURCE } from '../constants'
 
 export class Schedules {
-  protected client: Client;
+  protected client: Client
   constructor(client: Client) {
-    this.client = client;
+    this.client = client
   }
 
   /**
@@ -15,9 +15,9 @@ export class Schedules {
    */
   retrieve(scheduleId: string): Promise<Types.Schedules.ISchedule> {
     return this.client.request<Types.Schedules.ISchedule>({
-      method: "get",
+      method: 'get',
       path: `${SCHEDULES_RESOURCE}/${scheduleId}`,
-    });
+    })
   }
 
   /**
@@ -29,10 +29,10 @@ export class Schedules {
     scheduleData: Types.Schedules.ICreateSchedule
   ): Promise<Types.Schedules.ISchedule> {
     return this.client.request<Types.Schedules.ISchedule>({
-      method: "post",
+      method: 'post',
       path: SCHEDULES_RESOURCE,
       data: scheduleData,
-    });
+    })
   }
 
   /**
@@ -42,8 +42,8 @@ export class Schedules {
    */
   destroy(scheduleId: string): Promise<Types.IDestroyResponse> {
     return this.client.request<Types.IDestroyResponse>({
-      method: "delete",
+      method: 'delete',
       path: `${SCHEDULES_RESOURCE}/${scheduleId}`,
-    });
+    })
   }
 }

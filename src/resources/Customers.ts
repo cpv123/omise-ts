@@ -1,11 +1,11 @@
-import type { Client } from "../Client";
-import * as Types from "../types";
-import { CUSTOMERS_RESOURCE, SCHEDULES_RESOURCE } from "../constants";
+import type { Client } from '../Client'
+import * as Types from '../types'
+import { CUSTOMERS_RESOURCE, SCHEDULES_RESOURCE } from '../constants'
 
 export class Customers {
-  protected client: Client;
+  protected client: Client
   constructor(client: Client) {
-    this.client = client;
+    this.client = client
   }
 
   /**
@@ -15,9 +15,9 @@ export class Customers {
    */
   retrieve(customerId: string): Promise<Types.Customers.ICustomer> {
     return this.client.request<Types.Customers.ICustomer>({
-      method: "get",
+      method: 'get',
       path: `${CUSTOMERS_RESOURCE}/${customerId}`,
-    });
+    })
   }
 
   /**
@@ -32,10 +32,10 @@ export class Customers {
       Types.Customers.ICustomer,
       Types.Customers.IRequest
     >({
-      method: "post",
+      method: 'post',
       path: CUSTOMERS_RESOURCE,
       data: customerData,
-    });
+    })
   }
 
   /**
@@ -52,10 +52,10 @@ export class Customers {
       Types.Customers.ICustomer,
       Types.Customers.IRequest
     >({
-      method: "patch",
+      method: 'patch',
       path: `${CUSTOMERS_RESOURCE}/${customerId}`,
       data: customer,
-    });
+    })
   }
 
   /**
@@ -65,9 +65,9 @@ export class Customers {
    */
   destroy(customerId: string): Promise<Types.IDestroyResponse> {
     return this.client.request<Types.IDestroyResponse>({
-      method: "delete",
+      method: 'delete',
       path: `${CUSTOMERS_RESOURCE}/${customerId}`,
-    });
+    })
   }
 
   /**
@@ -81,10 +81,10 @@ export class Customers {
   ): Promise<Types.Customers.ICustomer> {
     const updatedCustomer = await this.update(customerId, {
       card: cardToken,
-    });
-    const allCards = updatedCustomer.cards.data;
-    const newCard = allCards[allCards.length - 1];
-    return this.update(customerId, { default_card: newCard.id });
+    })
+    const allCards = updatedCustomer.cards.data
+    const newCard = allCards[allCards.length - 1]
+    return this.update(customerId, { default_card: newCard.id })
   }
 
   /**
@@ -94,9 +94,9 @@ export class Customers {
    */
   listSchedules(customerId: string): Promise<Types.Schedules.ISchedulesList> {
     return this.client.request<Types.Schedules.ISchedulesList>({
-      method: "get",
+      method: 'get',
       path: `${CUSTOMERS_RESOURCE}/${customerId}/${SCHEDULES_RESOURCE}`,
-    });
+    })
   }
 
   /**
@@ -107,20 +107,20 @@ export class Customers {
   async destroySchedules(
     customerId: string
   ): Promise<Partial<Types.IDestroyResponse>> {
-    const schedules = await this.listSchedules(customerId);
+    const schedules = await this.listSchedules(customerId)
 
     const activeScheduleIds: Array<string> = schedules?.data
       ?.filter((schedule) => schedule?.active)
-      ?.map((schedule) => schedule?.id);
+      ?.map((schedule) => schedule?.id)
 
     const deleteSchedulesPromises = activeScheduleIds.map((scheduleId) =>
       this.client.schedules.destroy(scheduleId)
-    );
+    )
 
-    await Promise.all(deleteSchedulesPromises);
+    await Promise.all(deleteSchedulesPromises)
 
     return {
       deleted: true,
-    };
+    }
   }
 }
