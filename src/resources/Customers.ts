@@ -71,6 +71,18 @@ export class Customers {
   }
 
   /**
+   * List all customers.
+   * @returns Promise<ICustomerList>
+   *
+   */
+  list(): Promise<Types.Customers.ICustomerList> {
+    return this.client.request<Types.Customers.ICustomerList>({
+      method: 'get',
+      path: CUSTOMERS_RESOURCE,
+    })
+  }
+
+  /**
    * Adds a new card to a customer and sets the newly added card as the default.
    * @param { customerId, cardToken }
    * @returns Promise<ICustomer>
