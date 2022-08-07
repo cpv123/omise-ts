@@ -3,6 +3,7 @@ import { Charges } from './resources/Charges'
 import { Customers } from './resources/Customers'
 import { Schedules } from './resources/Schedules'
 import { OMISE_API_BASE_URL, DEFAULT_API_VERSION } from './constants'
+import { version as packageVersion } from '../package.json'
 
 export type ClientConfig = {
   apiSecretKey: string
@@ -38,15 +39,19 @@ export class Client {
     path: string
     data?: TData
   }): Promise<AxiosResponse<TResponse>['data']> {
-    const base64Auth = Buffer.from(this.apiSecretKey).toString('base64')
     const result = await axios.request<
       TResponse,
       AxiosResponse<TResponse>,
       TData
     >({
       headers: {
-        Authorization: `Basic ${base64Auth}`,
-        ['Omise-Version']: this.omiseAPIVersion,
+        'User-Agent': `omise-ts/${packageVersion}`,
+        'Content-Type': 'application/json',
+        'Omise-Version': this.omiseAPIVersion,
+      },
+      auth: {
+        username: this.apiSecretKey,
+        password: '',
       },
       method,
       baseURL: OMISE_API_BASE_URL,

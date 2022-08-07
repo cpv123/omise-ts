@@ -67,12 +67,14 @@ describe('Client', () => {
         method: 'get',
         path: '/test',
       })
-      const authToken = Buffer.from('secret-key').toString('base64')
       expect(axios.request).toHaveBeenCalledWith(
         expect.objectContaining({
           headers: expect.objectContaining({
             'Omise-Version': 'version-1',
-            Authorization: `Basic ${authToken}`,
+          }),
+          auth: expect.objectContaining({
+            username: 'secret-key',
+            password: '',
           }),
         })
       )
