@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import OmiseClient from '../../../build/src/index'
+import OmiseClient from '../../../build'
 
 type Data = {
   success: boolean

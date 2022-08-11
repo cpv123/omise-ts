@@ -2,11 +2,14 @@
   "name": "omise-ts",
   "version": "0.1.0",
   "description": "",
-  "main": "./build/index.js",
-  "types": "./build/index.d.ts",
-  "typings": "./build/index.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "typings": "build/index.d.ts",
+  "files": [
+    "/build"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf build && tsc",
     "postbuild": "cp src/types.d.ts build/",
     "prepublishOnly": "yarn test && yarn build",
     "preversion": "yarn test",

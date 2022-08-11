@@ -3,7 +3,8 @@ import { Charges } from './resources/Charges'
 import { Customers } from './resources/Customers'
 import { Schedules } from './resources/Schedules'
 import { OMISE_API_BASE_URL, DEFAULT_API_VERSION } from './constants'
-import { version as packageVersion } from '../package.json'
+
+const OMISE_TS_VERSION = '0.1.0'
 
 export type ClientConfig = {
   apiSecretKey: string
@@ -45,7 +46,7 @@ export class Client {
       TData
     >({
       headers: {
-        'User-Agent': `omise-ts/${packageVersion}`,
+        'User-Agent': `omise-ts/${OMISE_TS_VERSION}`,
         'Content-Type': 'application/json',
         'Omise-Version': this.omiseAPIVersion,
       },
