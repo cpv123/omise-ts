@@ -2,7 +2,7 @@
 
 A modern-day version of the [omise-node](https://github.com/omise/omise-node) package, allowing you to easily use the [Omise APIs](https://www.omise.co/docs) with Node.js.
 
-### What's wrong with the official version needed?
+### What's wrong with the official version?
 
 - It's not maintained (or at least very, very rarely maintained)
 - It doesn't work with Next.js, explained in [this issue](https://github.com/omise/omise-node/issues/140)
@@ -11,7 +11,7 @@ A modern-day version of the [omise-node](https://github.com/omise/omise-node) pa
 
 - It's maintained, and it works with Next.js (see the [example-app](https://github.com/cpv123/omise-ts/tree/main/example-app) in this repo)
 - It's written in TypeScript
-- It offers more than just basic CRUD operations per resource, but also includes slightly more complex functions such as deleting all _schedules_ for a _customer_
+- It offers more than just basic CRUD operations per resource; it also includes slightly more complex functions such as deleting all _schedules_ for a _customer_
 
 ### Limitations of this SDK
 
