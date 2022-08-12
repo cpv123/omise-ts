@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import type { GetStaticProps } from 'next'
-import Omise from '../../build'
-import * as Types from '../../build/types'
+import OmiseClient, { Omise } from 'omise-ts'
 
 type Props = {
-  customers: Types.Customers.ICustomerList['data']
+  customers: Omise.Customers.ICustomerList['data']
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const omise = new Omise({
+  const omise = new OmiseClient({
     apiSecretKey: process.env.OMISE_SECRET_KEY as string,
   })
   const customersList = await omise.customers.list()
