@@ -75,6 +75,30 @@ export class Charges {
   }
 
   /**
+   * Expires a charge.
+   * @param chargeId
+   * @returns Promise<ICharge>
+   */
+  expire(chargeId: string): Promise<Types.Charges.ICharge> {
+    return this.client.request<Types.Charges.ICharge>({
+      method: 'post',
+      path: `${CHARGES_RESOURCE}/${chargeId}/expire`,
+    })
+  }
+
+  /**
+   * Dispute a charge.
+   * @param chargeId
+   * @returns Promise<ICharge>
+   */
+  dispute(chargeId: string): Promise<Types.Charges.ICharge> {
+    return this.client.request<Types.Charges.ICharge>({
+      method: 'post',
+      path: `${CHARGES_RESOURCE}/${chargeId}/dispute`,
+    })
+  }
+
+  /**
    * Lists all charges.
    * @returns Promise<IChargeList>
    */
