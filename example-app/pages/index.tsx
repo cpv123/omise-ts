@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { GetStaticProps } from 'next'
-import Omise from '../../build/src/index'
+import Omise from '../../build'
 import * as Types from '../../build/types'
 
 type Props = {
