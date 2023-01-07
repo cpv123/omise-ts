@@ -27,7 +27,8 @@ export default async function handler(
     })
   }
 
-  const { amount, customerId } = req.body
+  const { customerId } = req.query
+  const { amount } = req.body
   const amountToCharge = amount * 100
 
   const Omise = new OmiseClient({
@@ -36,7 +37,7 @@ export default async function handler(
 
   const charge = await Omise.charges.create({
     amount: amountToCharge,
-    customer: customerId,
+    customer: customerId as string,
     currency: 'THB',
   })
 

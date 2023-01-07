@@ -19,17 +19,17 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 }
 
 export default function Home({ customers }: Props) {
-  const [loading, setLoading] = useState(false)
+  const [loadingCreateCharge, setLoadingCreateCharge] = useState(false)
+  const [loadingDeleteSchedules, setLoadingDeleteSchedules] = useState(false)
   const [amount, setAmount] = useState<string>('')
   const [customerId, setCustomerId] = useState('')
 
   const handleCreateCharge = async () => {
-    setLoading(true)
-    await fetch('/api/charges', {
+    setLoadingCreateCharge(true)
+    await fetch(`/api/${customerId}/create-charge`, {
       method: 'POST',
       body: JSON.stringify({
         amount: Number(amount),
-        customerId,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +37,18 @@ export default function Home({ customers }: Props) {
     })
     setAmount('')
     setCustomerId('')
-    setLoading(false)
+    setLoadingCreateCharge(false)
+  }
+
+  const handleDeleteCustomerSchedules = async (customerId: string) => {
+    setLoadingDeleteSchedules(true)
+    await fetch(`/api/${customerId}/delete-schedules`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    setLoadingDeleteSchedules(false)
   }
 
   return (
@@ -51,7 +62,7 @@ export default function Home({ customers }: Props) {
           onChange={(event) => setAmount(event.target.value)}
         />
         <button
-          disabled={loading || !amount || !customerId}
+          disabled={loadingCreateCharge || !amount || !customerId}
           onClick={handleCreateCharge}
           type="button"
           className="w-60 cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -77,6 +88,15 @@ export default function Home({ customers }: Props) {
               </td>
               <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
                 {customer.email}
+              </td>
+              <td>
+                <button
+                  className=" cursor-pointer text-red-600 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => handleDeleteCustomerSchedules(customer.id)}
+                  disabled={loadingDeleteSchedules}
+                >
+                  Delete Schedules
+                </button>
               </td>
             </tr>
           ))}
