@@ -18,6 +18,7 @@ declare namespace Omise {
     links: Links.ILinksAPI
     recipients: Recipients.IRecipientsAPI
     schedules: Schedules.ISchedulesAPI
+    searches: Searches.ISearchesAPI
     sources: Sources.ISourcesAPI
     tokens: Tokens.ITokensAPI
     transactions: Transactions.ITransactionsAPI
@@ -198,46 +199,26 @@ declare namespace Omise {
       amount: number
       currency: string
       description: string
-      device: any
-      disputable: boolean
-      capturable: boolean
       capture: boolean
-      authorize_uri: string
       authorized: boolean
-      branch: any
       reversed: boolean
       paid: boolean
-      paid_at: string
-      transaction: string | Transactions.ITransaction
+      transaction: string
       refunded: number
       refunds: IListRefundResponse
       failure_code: string
       failure_message: string
       card: Cards.ICard
-      created_at: string
-      customer: string | Customers.ICustomer
+      customer: string
       ip: string
-      dispute: string | Disputes.IResponse
-      expired: boolean
-      expired_at: string
-      expires_at: string
-      interest: number
-      interest_vat: number
-      link: string | Links.ILink
-      net: number
-      platform_fee: IPlatformFee
-      refundable: boolean
-      refunded_amount: number
-      return_uri: string
-      reversed_at: string
-      reversible: boolean
-      schedule: string | Schedules.ISchedule
-      terminal: any
+      dispute: string
       created: string
-      voided: boolean
-      zero_interest_installments: boolean
       metadata: { [key: string]: any }
       source?: Sources.ISource
+      status: string
+      created_at: string
+      reversed_at: string
+      voided: boolean
     }
 
     interface IListRefundResponse extends IOccurrences {
@@ -797,29 +778,42 @@ declare namespace Omise {
     }
 
     interface ISchedule extends IBaseResponse {
-      status: string
-      active: boolean
+      status: 'running' | 'expiring' | 'expired' | 'deleted' | 'suspended'
       every: number
       period: string
       on: Ion
-      start_on: string
       in_words: string
-      start_date: string
+      deleted: boolean
+      created_at: string
+      start_on: string
       end_date: string
       occurrences: IOccurrences
-      next_occurrence_dates: string[]
       next_occurrences_on: string[]
-      charge?: IChargeScheduleResponse
-      created: string
-      created_at: string
+      charge?: ICharge
       end_on: string
-      ended_at: string
-      deleted: boolean
-      transfer?: Transfers.ITransfer
+      start_date: string
+      active: boolean
     }
 
     interface ISchedulesList extends IOccurrences {
       data: ISchedule[]
+    }
+  }
+
+  export namespace Searches {
+    interface ISearchesAPI {
+      list({
+        scope,
+        query,
+        filters,
+      }: {
+        scope: string
+        query?: string
+        filters?: {
+          [key: string]: any
+        }
+        per_page?: number
+      }): BlueBird<any>
     }
   }
 
