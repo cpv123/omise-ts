@@ -747,6 +747,17 @@ declare namespace Omise {
       metadata?: { [key: string]: any }
     }
 
+    interface IOccurrence extends IBaseResponse {
+      result: string
+      schedule: string
+      message: string
+      status: 'failed' | 'successful' | 'skipped'
+      processed_at: string
+      created_at: string
+      scheduled_on: string
+      retry_on: null | string
+    }
+
     interface ICreateSchedule {
       every: number
       period: string
