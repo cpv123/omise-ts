@@ -772,6 +772,7 @@ declare namespace Omise {
       customer: string
       card?: string
       amount: number
+      currency: string
       description: string
       metadata?: { [key: string]: any }
     }
