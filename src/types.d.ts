@@ -769,11 +769,11 @@ declare namespace Omise {
     }
 
     interface IChargeScheduleRequest {
-      customer: string
-      card?: string
       amount: number
       currency: string
-      description: string
+      customer?: string
+      card?: string
+      description?: string
       metadata?: { [key: string]: any }
     }
 
