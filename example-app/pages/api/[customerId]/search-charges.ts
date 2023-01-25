@@ -18,7 +18,7 @@ export default async function handler(
 
   const searchCharges = await Omise.search.list({
     scope: 'charge',
-    query: customerId,
+    query: customerId as string,
     filters: {
       voided: false,
       reversed: false,
