@@ -21,6 +21,10 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 export default function Home({ customers }: Props) {
   const [loadingCreateCharge, setLoadingCreateCharge] = useState(false)
   const [loadingDeleteSchedules, setLoadingDeleteSchedules] = useState(false)
+  const [chargeCount, setChargeCount] = useState<{
+    customerId: string
+    count: number
+  } | null>(null)
   const [amount, setAmount] = useState<string>('')
   const [customerId, setCustomerId] = useState('')
 
@@ -49,6 +53,16 @@ export default function Home({ customers }: Props) {
       },
     })
     setLoadingDeleteSchedules(false)
+  }
+
+  const handleSearch = async (customerId: string) => {
+    const { data } = await fetch(`/api/${customerId}/search-charges`).then(
+      (res) => res.json()
+    )
+    setChargeCount({
+      customerId,
+      count: data.data.length,
+    })
   }
 
   return (
@@ -91,13 +105,25 @@ export default function Home({ customers }: Props) {
               </td>
               <td>
                 <button
-                  className=" cursor-pointer text-red-600 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="cursor-pointer text-red-600 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={() => handleDeleteCustomerSchedules(customer.id)}
                   disabled={loadingDeleteSchedules}
                 >
                   Delete Schedules
                 </button>
               </td>
+              <td>
+                <button
+                  className="cursor-pointer text-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => handleSearch(customer.id)}
+                  disabled={loadingDeleteSchedules}
+                >
+                  Check Charge Count
+                </button>
+              </td>
+              {chargeCount?.customerId === customer.id && (
+                <td>{chargeCount.count}</td>
+              )}
             </tr>
           ))}
         </tbody>
