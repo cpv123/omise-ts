@@ -1,6 +1,6 @@
 import type { Client } from '../Client'
 import * as Types from '../types'
-import { CHARGES_RESOURCE } from '../constants'
+import { CHARGES_RESOURCE, PaginationParams } from '../constants'
 
 export class Charges {
   protected client: Client
@@ -102,10 +102,11 @@ export class Charges {
    * Lists all charges.
    * @returns Promise<IChargeList>
    */
-  list(): Promise<Types.Charges.IChargeList> {
+  list(params?: PaginationParams): Promise<Types.Charges.IChargeList> {
     return this.client.request<Types.Charges.IChargeList>({
       method: 'get',
       path: CHARGES_RESOURCE,
+      params,
     })
   }
 }

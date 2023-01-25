@@ -1,6 +1,10 @@
 import type { Client } from '../Client'
 import * as Types from '../types'
-import { CUSTOMERS_RESOURCE, SCHEDULES_RESOURCE } from '../constants'
+import {
+  CUSTOMERS_RESOURCE,
+  SCHEDULES_RESOURCE,
+  PaginationParams,
+} from '../constants'
 
 export class Customers {
   protected client: Client
@@ -75,10 +79,11 @@ export class Customers {
    * @returns Promise<ICustomerList>
    *
    */
-  list(): Promise<Types.Customers.ICustomerList> {
+  list(params?: PaginationParams): Promise<Types.Customers.ICustomerList> {
     return this.client.request<Types.Customers.ICustomerList>({
       method: 'get',
       path: CUSTOMERS_RESOURCE,
+      params,
     })
   }
 
@@ -104,10 +109,14 @@ export class Customers {
    * @param customerId
    * @returns Promise<ISchedulesList>
    */
-  listSchedules(customerId: string): Promise<Types.Schedules.ISchedulesList> {
+  listSchedules(
+    customerId: string,
+    params?: PaginationParams
+  ): Promise<Types.Schedules.ISchedulesList> {
     return this.client.request<Types.Schedules.ISchedulesList>({
       method: 'get',
       path: `${CUSTOMERS_RESOURCE}/${customerId}/${SCHEDULES_RESOURCE}`,
+      params,
     })
   }
 

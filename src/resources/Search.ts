@@ -1,5 +1,5 @@
 import type { Client } from '../Client'
-import { SEARCH_RESOURCE } from '../constants'
+import { SEARCH_RESOURCE, PaginationParams } from '../constants'
 
 type Scope =
   | 'charge'
@@ -25,20 +25,20 @@ export class Search {
    * @param searchParams
    * @returns Promise<any>
    */
-  list(searchParams: {
+  list(params: {
     scope: Scope
     query: string
-    order: 'chronological' | 'reverse_chronological'
     filters?: {
       [key: string]: any
     }
+    order?: PaginationParams['order']
     page?: number
     per_page?: number
   }): Promise<any> {
     return this.client.request<any>({
       method: 'get',
       path: SEARCH_RESOURCE,
-      params: searchParams,
+      params: params,
     })
   }
 }
