@@ -38,7 +38,7 @@ export class Schedules {
   /**
    * Deletes a schedule.
    * @param scheduleId
-   * @returns Promise<IDestroyResponse>
+   * @returns Promise<ISchedule>
    */
   destroy(scheduleId: string): Promise<Types.Schedules.ISchedule> {
     return this.client.request<Types.Schedules.ISchedule>({

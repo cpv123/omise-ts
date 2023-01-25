@@ -61,7 +61,7 @@ export class Customers {
   /**
    * Deletes a customer.
    * @param customerId
-   * @returns Promise<IDestroyResponse>
+   * @returns Promise<ICustomer>
    */
   destroy(customerId: string): Promise<Types.Customers.ICustomer> {
     return this.client.request<Types.Customers.ICustomer>({
