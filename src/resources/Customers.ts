@@ -63,8 +63,8 @@ export class Customers {
    * @param customerId
    * @returns Promise<IDestroyResponse>
    */
-  destroy(customerId: string): Promise<Types.IDestroyResponse> {
-    return this.client.request<Types.IDestroyResponse>({
+  destroy(customerId: string): Promise<Types.Customers.ICustomer> {
+    return this.client.request<Types.Customers.ICustomer>({
       method: 'delete',
       path: `${CUSTOMERS_RESOURCE}/${customerId}`,
     })

@@ -40,8 +40,8 @@ export class Schedules {
    * @param scheduleId
    * @returns Promise<IDestroyResponse>
    */
-  destroy(scheduleId: string): Promise<Types.IDestroyResponse> {
-    return this.client.request<Types.IDestroyResponse>({
+  destroy(scheduleId: string): Promise<Types.Schedules.ISchedule> {
+    return this.client.request<Types.Schedules.ISchedule>({
       method: 'delete',
       path: `${SCHEDULES_RESOURCE}/${scheduleId}`,
     })
