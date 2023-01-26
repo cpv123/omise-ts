@@ -128,7 +128,10 @@ export class Customers {
   async destroySchedules(
     customerId: string
   ): Promise<Partial<Types.IDestroyResponse>> {
-    const schedules = await this.listSchedules(customerId)
+    const schedules = await this.listSchedules(customerId, {
+      order: 'reverse_chronological',
+      limit: 50, // use a high limit in the hope of catching all schedules that might still be active
+    })
 
     const activeScheduleIds: Array<string> = schedules?.data
       ?.filter((schedule) => schedule?.active)
