@@ -102,12 +102,25 @@ export class Customers {
   }
 
   /**
-   * Adds a new card to a customer and sets the newly added card as the default.
+   * Updates the default card for a customer.
    * @param customerId string
    * @param cardToken string
    * @returns Promise<ICustomer>
    */
   async updateDefaultCard(
+    customerId: string,
+    cardId: string
+  ): Promise<Types.Customers.ICustomer> {
+    return this.update(customerId, { default_card: cardId })
+  }
+
+  /**
+   * Adds a new card to a customer and sets the newly added card as the default.
+   * @param customerId string
+   * @param cardToken string
+   * @returns Promise<ICustomer>
+   */
+  async addCardAsDefault(
     customerId: string,
     cardToken: string
   ): Promise<Types.Customers.ICustomer> {
@@ -116,7 +129,7 @@ export class Customers {
     })
     const allCards = updatedCustomer.cards.data
     const newCard = allCards[allCards.length - 1]
-    return this.update(customerId, { default_card: newCard.id })
+    return this.updateDefaultCard(customerId, newCard.id)
   }
 
   /**
