@@ -4,6 +4,7 @@ import {
   CUSTOMERS_RESOURCE,
   SCHEDULES_RESOURCE,
   PaginationParams,
+  CARDS_RESOURCE,
 } from '../constants'
 
 export class Customers {
@@ -88,8 +89,22 @@ export class Customers {
   }
 
   /**
+   * Deletes a card belonging to the customer.
+   * @param customerId
+   * @param cardId
+   * @return Promise<ICard>
+   */
+  async destroyCard(customerId: string, cardId: string) {
+    return this.client.request<Types.Cards.ICard>({
+      method: 'delete',
+      path: `${CUSTOMERS_RESOURCE}/${customerId}/${CARDS_RESOURCE}/${cardId}`,
+    })
+  }
+
+  /**
    * Adds a new card to a customer and sets the newly added card as the default.
-   * @param { customerId, cardToken }
+   * @param customerId string
+   * @param cardToken string
    * @returns Promise<ICustomer>
    */
   async updateDefaultCard(
